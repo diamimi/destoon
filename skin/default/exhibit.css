@@ -1,0 +1,17 @@
+/*
+	[DESTOON B2B System] Copyright (c) 2008-2018 www.destoon.com
+	This is NOT a freeware, use is subject to license.txt
+*/
+.exh-list {padding:0 6px 24px 6px;}
+.exh-list li {height:32px;line-height:32px;}
+.exh-list em {font-style:normal;float:right;color:#666666;}
+.exh-list i {font-style:normal;padding-right:48px;}
+
+.exh-slide {width:350px;height:250px;float:left;}
+.exh-rec {width:510px;height:250px;overflow:hidden;float:left;padding:0 0 10px 0;}
+.exh-rec ul {margin-bottom:6px;}
+.exh-rec li {color:#666666;height:26px;line-height:26px;overflow:hidden;}
+
+.ctb {background:#DDDDDD;}
+.ltd {width:100px;text-align:center;background:#F3F3F3;font-weight:bold;color:#333333;}
+.rtd {background:#FFFFFF;}
