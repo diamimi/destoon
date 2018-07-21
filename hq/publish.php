@@ -6,25 +6,32 @@
 require '../common.inc.php';
 require '../include/post.func.php';
 require '../module/member/member.class.php';
-$table_member= DT_PRE.'member';
-$table_member_misc = DT_PRE.'member_misc';
-$table_company = DT_PRE.'company';
+$table_msg= DT_PRE.'sell_5';
 
 
-$member['linkurl'] = userurl($_POST['username']);
-$password = $_POST['password'];
-$member['passsalt'] = random(8);
-$member['paysalt'] = random(8);
-$member['password'] = dpassword($password, $member['passsalt']);
-$member['payword'] = dpassword($password, $member['paysalt']);
-$member['sound'] = 1;
-$member['username'] = $_POST['username'];
-$member['passport'] = $_POST['username'];
-$member['company'] = $_POST['company'];
-$member['email'] = $_POST['email'];
-$member['time'] = $_POST['time'];
-$member['auth'] = $_POST['auth'];
-$member['groupid'] ='6';
+$msg['username'] = userurl($_POST['username']);
+$msg['company'] = userurl($_POST['company']);
+$msg['introduce'] =$_POST['introduce'];
+$msg['title'] =$_POST['title'];
+$msg['n1'] =$_POST['n1'];
+$msg['n2'] =$_POST['n2'];
+$msg['n3'] =$_POST['n3'];
+$msg['v1'] =$_POST['v1'];
+$msg['v2'] =$_POST['v2'];
+$msg['v3'] =$_POST['v3'];
+$msg['brand'] =$_POST['brand'];
+$msg['unit'] =$_POST['unit'];
+$msg['price'] =$_POST['price'];
+$msg['minamount'] =$_POST['minamount'];
+$msg['amount'] =$_POST['amount'];
+$msg['days'] =$_POST['days'];
+$msg['keyword'] =$_POST['keyword'];
+$msg['hits'] =$_POST['hits'];
+$msg['thumb'] =$_POST['thumb'];
+$msg['v3'] =$_POST['v3'];
+
+$Fileds=array('catid','mycatid','areaid','typeid','level','title','tag','style','fee','introduce','n1','n2','n3','v1','v2','v3','brand','unit','price','minamount','amount','days','thumb','thumb1','thumb2','tag','status','hits','username','totime','editor','addtime','adddate','edittime','editdate','ip','template','linkurl','filepath','elite','note','company','truename','telephone','mobile','address','email','qq','wx','ali','skype');
+
 
 
 if($member['username']==''){

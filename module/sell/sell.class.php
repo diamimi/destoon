@@ -128,6 +128,11 @@ class sell {
 		return $lists;
 	}
 
+    /**
+     * @param $post
+     * @return mixed
+     * 发布信息
+     */
 	function add($post) {
 		global $MOD;
 		$post = $this->set($post);

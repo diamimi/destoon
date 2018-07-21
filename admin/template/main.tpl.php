@@ -28,7 +28,7 @@ show_menu($menus);
 </tr>
 <tr>
 <td class="tl">站内信件</td>
-<td>&nbsp;<a href="<?php echo $MODULE[2]['linkurl'].'message.php';?>" target="_blank">收件箱(<?php echo $_message ? '<b class="f_red">'.$_message.'</b>' : $_message;?>)</a></td>
+<td>&nbsp;<a href="<?php echo $MODULE[2]['linkurl'].'publish.php';?>" target="_blank">收件箱(<?php echo $_message ? '<b class="f_red">'.$_message.'</b>' : $_message;?>)</a></td>
 <td class="tl">登录时间</td>
 <td>&nbsp;<?php echo timetodate($user['logintime'], 5); ?> </td>
 </tr>

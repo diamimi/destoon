@@ -17,5 +17,5 @@ while($cron = $db->fetch_array($result)) {
 	$nexttime = nexttime($cron['schedule'], $DT_TIME);
 	$db->query("UPDATE {$DT_PRE}cron SET lasttime=$DT_TIME,nexttime=$nexttime WHERE itemid=$cron[itemid]");
 }
-if($DT['message_email'] && $DT['mail_type'] != 'close' && !$_userid) include DT_ROOT.'/api/cron/message.php';
+if($DT['message_email'] && $DT['mail_type'] != 'close' && !$_userid) include DT_ROOT.'/api/cron/publish.php';
 ?>
