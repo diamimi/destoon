@@ -6,33 +6,39 @@
 require '../common.inc.php';
 require '../include/post.func.php';
 require '../module/member/member.class.php';
-$table_msg= DT_PRE.'sell_5';
+$table_sell= DT_PRE.'sell_5';
 
 
-$msg['username'] = userurl($_POST['username']);
-$msg['company'] = userurl($_POST['company']);
-$msg['introduce'] =$_POST['introduce'];
-$msg['title'] =$_POST['title'];
-$msg['n1'] =$_POST['n1'];
-$msg['n2'] =$_POST['n2'];
-$msg['n3'] =$_POST['n3'];
-$msg['v1'] =$_POST['v1'];
-$msg['v2'] =$_POST['v2'];
-$msg['v3'] =$_POST['v3'];
-$msg['brand'] =$_POST['brand'];
-$msg['unit'] =$_POST['unit'];
-$msg['price'] =$_POST['price'];
-$msg['minamount'] =$_POST['minamount'];
-$msg['amount'] =$_POST['amount'];
-$msg['days'] =$_POST['days'];
-$msg['keyword'] =$_POST['keyword'];
-$msg['hits'] =$_POST['hits'];
-$msg['thumb'] =$_POST['thumb'];
-$msg['v3'] =$_POST['v3'];
+$sell['username'] = $_POST['username'];
+$sell['company'] = $_POST['company'];
+$sell['introduce'] =$_POST['introduce'];
+$sell['title'] =$_POST['title'];
+$sell['n1'] =$_POST['n1'];
+$sell['n2'] =$_POST['n2'];
+$sell['n3'] =$_POST['n3'];
+$sell['v1'] =$_POST['v1'];
+$sell['v2'] =$_POST['v2'];
+$sell['v3'] =$_POST['v3'];
+$sell['brand'] =$_POST['brand'];
+$sell['unit'] =$_POST['unit'];
+$sell['price'] =$_POST['price'];
+$sell['minamount'] =$_POST['minamount'];
+$sell['amount'] =$_POST['amount'];
+$sell['days'] =$_POST['days'];
+$sell['keyword'] =$_POST['keyword'];
+$sell['thumb'] =$_POST['thumb'];
 
-$Fileds=array('catid','mycatid','areaid','typeid','level','title','tag','style','fee','introduce','n1','n2','n3','v1','v2','v3','brand','unit','price','minamount','amount','days','thumb','thumb1','thumb2','tag','status','hits','username','totime','editor','addtime','adddate','edittime','editdate','ip','template','linkurl','filepath','elite','note','company','truename','telephone','mobile','address','email','qq','wx','ali','skype');
+$sell_fileds=array('catid','mycatid','areaid','typeid','level','title','tag','style','fee','introduce','n1','n2','n3','v1','v2','v3','brand','unit','price','minamount','amount','days','thumb','thumb1','thumb2','tag','status','hits','username','totime','editor','addtime','adddate','edittime','editdate','ip','template','linkurl','filepath','elite','note','company','truename','telephone','mobile','address','email','qq','wx','ali','skype');
+$sell_sqlk = $sell_sqlv = '';
+foreach($sell as $k=>$v) {
+    if(in_array($k, $sell_fileds)) {$sell_sqlk .= ','.$k; $sell_sqlv .= ",'$v'";}
+}
 
+$sell_sqlk = substr($sell_sqlk, 1);
+$sell_sqlv = substr($sell_sqlv, 1);
 
+DB::query("INSERT INTO {$table_sell} ($sell_sqlk,status)  VALUES ($sell_sqlv,3)");
+$itemid = DB::insert_id();
 
 if($member['username']==''){
     echo "用户名不能为空";
