@@ -29,6 +29,8 @@ $sell['amount'] =$_POST['amount'];
 $sell['days'] =$_POST['days'];
 $sell['keyword'] =$_POST['keyword'];
 $sell['thumb'] =$_POST['thumb'];
+$sell['thumb1'] =$_POST['thumb1'];
+$sell['thumb2'] =$_POST['thumb2'];
 $sell['catid'] ='1';
 $sell['areaid'] ='1';
 $sell['typeid'] ='1';
@@ -70,25 +72,6 @@ if($update) DB::query("UPDATE {$table_sell} SET ".(substr($update, 1))." WHERE i
 $sorttime = timetodate($item['edittime'], 'Y-m-d').' '.sprintf('%02d', $item['vip']).':'.timetodate($item['edittime'], 'H:i');
 $sorttime=strtotime($sorttime);
 DB::query("REPLACE INTO {$table_sell_search} (itemid,catid,areaid,status,content,sorttime) VALUES ($itemid,'$item[catid]','$item[areaid]','$item[status]','$keyword','$sorttime')");
-echo "发布成功";
-return;
-
-
-if($member['username']==''){
-    echo "用户名不能为空";
-    return;
-}
-
-if($member['company']==''){
-    echo "公司名不能为空";
-    return;
-}
-
-if($member['email']==''){
-    echo "邮箱不能为空";
-    return;
-}
-
 
 
 $result = array('msg'=>'success!','username' => $member['username'],'userid' =>$userid,'password'=>$member['password'],'passsalt'=>$member['passsalt'],'payword'=>$member['payword'],'paysalt'=>$member['paysalt']);
