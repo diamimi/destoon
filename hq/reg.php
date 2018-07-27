@@ -25,7 +25,10 @@ $member['email'] = $_POST['email'];
 $member['time'] = $_POST['time'];
 $member['auth'] = $_POST['auth'];
 $member['groupid'] ='6';
-
+if($member['auth']!=md5($member['time']."tuiguangjia")){
+    echo '认证错误';
+    return;
+}
 
 if($member['username']==''){
     echo "用户名不能为空";
@@ -41,8 +44,13 @@ if($member['email']==''){
     echo "邮箱不能为空";
     return;
 }
-
-
+$username=$member['username'];
+$company=$member['company'];
+$usernameCheck = DB::count($table_member," username='$username' or company='$company'");
+if($usernameCheck){
+    echo "用户名或公司名已存在!";
+    return;
+}
 
 $member_fields = array('username','company','passport', 'password','payword','email','sound','gender','truename','mobile','qq','wx','wxqr','ali','skype','department','career','groupid','regid','areaid','edittime','inviter','passsalt', 'paysalt');
 $misc_fields = array('username','bank','banktype','branch','account','reply','black', 'send');
