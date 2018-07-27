@@ -48,11 +48,15 @@ $password=$_POST['password'];
  */
 $member=DB::get_one("SELECT * FROM {$table_member} WHERE username='$username'");
 if($member==null){
-    echo "用户不存在";
+    $result = array('msg'=>'用户不存在!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 if($password!=$member['password']){
-    echo '密码错误';
+    $result = array('msg'=>'密码错误!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 
