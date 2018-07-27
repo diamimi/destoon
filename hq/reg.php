@@ -10,9 +10,16 @@ $table_member= DT_PRE.'member';
 $table_member_misc = DT_PRE.'member_misc';
 $table_company = DT_PRE.'company';
 
-
+$result='';
+$jsonResult='';
 $member['linkurl'] = userurl($_POST['username']);
 $password = $_POST['password'];
+if($password==''){
+    $result = array('msg'=>'密码不能为空!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
 $member['passsalt'] = random(8);
 $member['paysalt'] = random(8);
 $member['password'] = dpassword($password, $member['passsalt']);
@@ -25,30 +32,44 @@ $member['email'] = $_POST['email'];
 $member['time'] = $_POST['time'];
 $member['auth'] = $_POST['auth'];
 $member['groupid'] ='6';
+
 if($member['auth']!=md5($member['time']."tuiguangjia")){
-    echo '认证错误';
+    $result = array('msg'=>'认证失败!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 
 if($member['username']==''){
-    echo "用户名不能为空";
+    $result = array('msg'=>'用户名不能为空!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 
+
+
 if($member['company']==''){
-    echo "公司名不能为空";
+    $result = array('msg'=>'公司名不能为空!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 
 if($member['email']==''){
-    echo "邮箱不能为空";
+    $result = array('msg'=>'邮箱不能为空!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 $username=$member['username'];
 $company=$member['company'];
-$usernameCheck = DB::count($table_member," username='$username' or company='$company'");
-if($usernameCheck){
-    echo "用户名或公司名已存在!";
+$email=$member['email'];
+$check = DB::count($table_member," username='$username' or company='$company' or email='$email'");
+if($check){
+    $result = array('msg'=>'公司名或用户名或邮箱已存在!');
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
     return;
 }
 
@@ -69,7 +90,6 @@ $company_sqlk = substr($company_sqlk, 1);
 $company_sqlv = substr($company_sqlv, 1);
 DB::query("INSERT INTO {$table_member} ($member_sqlk,regip,regtime,loginip,logintime)  VALUES ($member_sqlv,'".DT_IP."','".DT_TIME."','".DT_IP."','".DT_TIME."')");
 $userid = DB::insert_id();
-$result='';
 $member['userid'] = $userid;
 DB::query("INSERT INTO {$table_member_misc} (userid, $misc_sqlk) VALUES ('$userid', $misc_sqlv)");
 DB::query("INSERT INTO {$table_company} (userid, $company_sqlk) VALUES ('$userid', $company_sqlv)");
@@ -88,7 +108,7 @@ if($MOD['sms_register'] > 0) {
     sms_record($member['username'], $MOD['sms_register'], 'system', $L['member_record_reg'], DT_IP);
 }
 $result = array('msg'=>'success!','username' => $member['username'],'userid' =>$userid,'password'=>$member['password'],'passsalt'=>$member['passsalt'],'payword'=>$member['payword'],'paysalt'=>$member['paysalt']);
-$jsonResult=json_encode($result);
+$jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 
 
