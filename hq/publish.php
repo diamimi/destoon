@@ -9,6 +9,7 @@ require '../module/member/member.class.php';
 $table_sell= DT_PRE.'sell_5';
 $table_sell_data= DT_PRE.'sell_data_5';
 $table_sell_search= DT_PRE.'sell_search_5';
+$table_member= DT_PRE.'member';
 
 
 $sell['username'] = $_POST['username'];
@@ -39,6 +40,22 @@ $sell['editdate'] = $sell['adddate'];
 $sell['edittime'] = DT_TIME;
 $sell['addtime'] = DT_TIME;
 $sell['ip'] = DT_IP;
+$sell['password'] = $_POST['password'];
+$username=$sell['username'];
+$password=$_POST['password'];
+/**
+ * 根据用户名查询表
+ */
+$member=DB::get_one("SELECT * FROM {$table_member} WHERE username='$username'");
+if($member==null){
+    echo "用户不存在";
+    return;
+}
+if($password!=$member['password']){
+    echo '密码错误';
+    return;
+}
+
 
 $sell_fileds=array('catid','mycatid','areaid','typeid','level','title','tag','style','fee','introduce','n1','n2','n3','v1','v2','v3','brand','unit','price','minamount','amount','days','thumb','thumb1','thumb2','tag','status','hits','username','totime','editor','addtime','adddate','edittime','editdate','ip','template','linkurl','filepath','elite','note','company','truename','telephone','mobile','address','email','qq','wx','ali','skype');
 $sell_sqlk = $sell_sqlv = '';

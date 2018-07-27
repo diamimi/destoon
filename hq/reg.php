@@ -70,12 +70,6 @@ $company_sqlv = substr($company_sqlv, 1);
 DB::query("INSERT INTO {$table_member} ($member_sqlk,regip,regtime,loginip,logintime)  VALUES ($member_sqlv,'".DT_IP."','".DT_TIME."','".DT_IP."','".DT_TIME."')");
 $userid = DB::insert_id();
 $result='';
-if($userid==0){
-    $result = array('msg' => 'fail,username is already used!');
-    $jsonResult=json_encode($result);
-    echo $jsonResult;
-    return;
-}
 $member['userid'] = $userid;
 DB::query("INSERT INTO {$table_member_misc} (userid, $misc_sqlk) VALUES ('$userid', $misc_sqlv)");
 DB::query("INSERT INTO {$table_company} (userid, $company_sqlk) VALUES ('$userid', $company_sqlv)");
