@@ -11,7 +11,6 @@ $table_sell_data= DT_PRE.'sell_data_5';
 $table_sell_search= DT_PRE.'sell_search_5';
 $table_member= DT_PRE.'member';
 
-
 $sell['username'] = $_POST['username'];
 $sell['company'] = $_POST['company'];
 $sell['introduce'] =$_POST['introduce'];
@@ -48,13 +47,13 @@ $password=$_POST['password'];
  */
 $member=DB::get_one("SELECT * FROM {$table_member} WHERE username='$username'");
 if($member==null){
-    $result = array('msg'=>'用户不存在!');
+    $result = array('msg'=>'用户不存在!','code'=>2);
     $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
     echo $jsonResult;
     return;
 }
 if($password!=$member['password']){
-    $result = array('msg'=>'密码错误!');
+    $result = array('msg'=>'密码错误!','code'=>2);
     $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
     echo $jsonResult;
     return;
