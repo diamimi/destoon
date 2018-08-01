@@ -93,8 +93,8 @@ $userid = DB::insert_id();
 $member['userid'] = $userid;
 DB::query("INSERT INTO {$table_member_misc} (userid, $misc_sqlk) VALUES ('$userid', $misc_sqlv)");
 DB::query("INSERT INTO {$table_company} (userid, $company_sqlk) VALUES ('$userid', $company_sqlv)");
-$msg_table = msg_table(4, $userid, is_file(DT_CACHE.'/4.part'), $table_company_data);
-DB::query("INSERT INTO {$msg_table} (userid, msg) VALUES ('$userid', '$member[msg]')");
+$content_table = content_table(4, $userid, is_file(DT_CACHE.'/4.part'), $table_company_data);
+DB::query("INSERT INTO {$content_table} (userid, content) VALUES ('$userid', '$member[content]')");
 if($MOD['credit_register'] > 0) {
     credit_add($member['username'] , $MOD['credit_register']);
     credit_record($member['username'] , $MOD['credit_register'], 'system', $L['member_record_reg'], DT_IP);
@@ -107,7 +107,7 @@ if($MOD['sms_register'] > 0) {
     sms_add($member['username'], $MOD['sms_register']);
     sms_record($member['username'], $MOD['sms_register'], 'system', $L['member_record_reg'], DT_IP);
 }
-$result = array('msg'=>'success!','code'=>1);
+$result = array('msg'=>'success!','username' => $member['username'],'userid' =>$userid,'password'=>$member['password'],'passsalt'=>$member['passsalt'],'payword'=>$member['payword'],'paysalt'=>$member['paysalt'],'code'=>1);
 $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 

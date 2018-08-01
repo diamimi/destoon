@@ -94,8 +94,8 @@ $sorttime=strtotime($sorttime);
 DB::query("REPLACE INTO {$table_sell_search} (itemid,catid,areaid,status,content,sorttime) VALUES ($itemid,'$item[catid]','$item[areaid]','$item[status]','$keyword','$sorttime')");
 
 
-$result = array('msg'=>'发布成功!');
-$jsonResult=json_encode($result);
+$result = array('msg'=>'发布成功!','code'=>1);
+$jsonResult=json_encode($result,JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 
 
