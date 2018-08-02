@@ -93,8 +93,7 @@ $sorttime = timetodate($item['edittime'], 'Y-m-d').' '.sprintf('%02d', $item['vi
 $sorttime=strtotime($sorttime);
 DB::query("REPLACE INTO {$table_sell_search} (itemid,catid,areaid,status,content,sorttime) VALUES ($itemid,'$item[catid]','$item[areaid]','$item[status]','$keyword','$sorttime')");
 
-
-$result = array('msg'=>'发布成功!','code'=>1);
+$result = array('msg'=>'发布成功!','code'=>1,'link'=>"https://www.yhwy.net/goods/".$linkurl,'id'=>$itemid);
 $jsonResult=json_encode($result,JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 
