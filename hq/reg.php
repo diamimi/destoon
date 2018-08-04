@@ -31,7 +31,11 @@ $member['company'] = $_POST['company'];
 $member['email'] = $_POST['email'];
 $member['time'] = $_POST['time'];
 $member['auth'] = $_POST['auth'];
-$member['groupid'] ='6';
+$member['truename'] = $_POST['truename'];
+$member['mobile'] = $_POST['mobile'];
+$member['qq'] = $_POST['qq'];
+$member['gender'] = $_POST['gender'];
+$member['groupid'] ='8';
 
 if($member['auth']!=md5($member['time']."tuiguangjia")){
     $result = array('msg'=>'认证失败!','code'=>2);
