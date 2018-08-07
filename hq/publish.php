@@ -10,8 +10,10 @@ $table_sell= DT_PRE.'sell_5';
 $table_sell_data= DT_PRE.'sell_data_5';
 $table_sell_search= DT_PRE.'sell_search_5';
 $table_member= DT_PRE.'member';
+$table_company= DT_PRE.'company';
 
 $sell['username'] = $_POST['username'];
+$sell['userid'] = $_POST['userid'];
 $sell['company'] = $_POST['company'];
 $sell['introduce'] =$_POST['introduce'];
 $sell['title'] =$_POST['title'];
@@ -27,13 +29,10 @@ $sell['price'] =$_POST['price'];
 $sell['minamount'] =$_POST['minamount'];
 $sell['amount'] =$_POST['amount'];
 $sell['days'] =$_POST['days'];
-$sell['keyword'] =$_POST['keyword'];
 $sell['thumb'] =$_POST['thumb'];
 $sell['thumb1'] =$_POST['thumb1'];
 $sell['thumb2'] =$_POST['thumb2'];
-$sell['catid'] ='1';
-$sell['areaid'] ='1';
-$sell['typeid'] ='1';
+$sell['typeid'] ='0';
 $sell['adddate'] = date("Y-m-d");
 $sell['editdate'] = $sell['adddate'];
 $sell['edittime'] = DT_TIME;
@@ -42,16 +41,75 @@ $sell['ip'] = DT_IP;
 $sell['password'] = $_POST['password'];
 $username=$sell['username'];
 $password=$_POST['password'];
+
+
+
+if($sell['username']==''){
+    $result = array('msg'=>'用户名不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
+
+if($sell['userid']==''){
+    $result = array('msg'=>'用户id不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
+if($sell['title']==''){
+    $result = array('msg'=>'标题不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
+if($sell['introduce']==''){
+    $result = array('msg'=>'产品介绍不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
+if($sell['price']==''){
+    $result = array('msg'=>'价格不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
+if($sell['thumb']==''){
+    $result = array('msg'=>'图片不能未空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
 /**
  * 根据用户名查询表
  */
-$member=DB::get_one("SELECT * FROM {$table_member} WHERE username='$username'");
+$member=DB::get_one("SELECT * FROM {$table_member} WHERE username='$username' and userid='$userid'");
 if($member==null){
     $result = array('msg'=>'用户不存在!','code'=>2);
     $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
     echo $jsonResult;
     return;
 }
+/**
+ * 查询catid,areaid
+ */
+$company=DB::get_one("SELECT * FROM {$table_company} WHERE username='$username' and userid='$userid'");
+if($company==null){
+    $result = array('msg'=>'公司不存在!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+$sell['areaid']=$company['areaid'];
+$sell['catid']=$company['catid'];
+
 if($password!=$member['password']){
     $result = array('msg'=>'密码错误!','code'=>2);
     $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
@@ -81,7 +139,7 @@ DB::query("REPLACE INTO {$table_sell_data} (itemid,content) VALUES ('$itemid ', 
 
 global $TYPE;
 $item = DB::get_one("SELECT * FROM {$table_sell} WHERE itemid=$itemid");
-$keyword = $item['title'].','.$TYPE[$item['typeid']].','.strip_tags(cat_pos(get_cat($item['catid']), ','));
+$keyword = $item['title'].','.'供应'.','.strip_tags(cat_pos(get_cat($item['catid']), ','));
 
 
 $update = '';
@@ -93,7 +151,7 @@ $sorttime = timetodate($item['edittime'], 'Y-m-d').' '.sprintf('%02d', $item['vi
 $sorttime=strtotime($sorttime);
 DB::query("REPLACE INTO {$table_sell_search} (itemid,catid,areaid,status,content,sorttime) VALUES ($itemid,'$item[catid]','$item[areaid]','$item[status]','$keyword','$sorttime')");
 
-$result = array('msg'=>'发布成功!','code'=>1,'link'=>"https://www.yhwy.net/goods/".$linkurl,'id'=>$itemid);
+$result = array('msg'=>'发布成功!','code'=>1,'link'=>"https://www.yhwy.net/goods/".$linkurl,'itemid'=>$itemid);
 $jsonResult=json_encode($result,JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 

@@ -36,6 +36,8 @@ $member['mobile'] = $_POST['mobile'];
 $member['qq'] = $_POST['qq'];
 $member['gender'] = $_POST['gender'];
 $member['groupid'] ='8';
+$member['catid'] =$_POST['industryId'];
+$member['areaid'] =$_POST['zoneId'];
 
 if($member['auth']!=md5($member['time']."tuiguangjia")){
     $result = array('msg'=>'认证失败!','code'=>2);
@@ -111,7 +113,7 @@ if($MOD['sms_register'] > 0) {
     sms_add($member['username'], $MOD['sms_register']);
     sms_record($member['username'], $MOD['sms_register'], 'system', $L['member_record_reg'], DT_IP);
 }
-$result = array('msg'=>'success!','username' => $member['username'],'userid' =>$userid,'password'=>$member['password'],'passsalt'=>$member['passsalt'],'payword'=>$member['payword'],'paysalt'=>$member['paysalt'],'code'=>1);
+$result = array('msg'=>'success!','username' => $member['username'],'userid' =>$userid,'password'=>$member['password'],'passsalt'=>$member['passsalt'],'code'=>1);
 $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 
