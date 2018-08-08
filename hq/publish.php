@@ -12,8 +12,9 @@ $table_sell_search= DT_PRE.'sell_search_5';
 $table_member= DT_PRE.'member';
 $table_company= DT_PRE.'company';
 
-$sell['username'] = $_POST['username'];
-$sell['userid'] = $_POST['userid'];
+$userid=$sell['userid'];
+$username=$_POST['username'];
+$secret=$_POST['secret'];
 $sell['company'] = $_POST['company'];
 $sell['introduce'] =$_POST['introduce'];
 $sell['title'] =$_POST['title'];
@@ -38,9 +39,7 @@ $sell['editdate'] = $sell['adddate'];
 $sell['edittime'] = DT_TIME;
 $sell['addtime'] = DT_TIME;
 $sell['ip'] = DT_IP;
-$sell['password'] = $_POST['password'];
-$username=$sell['username'];
-$password=$_POST['password'];
+
 
 
 
@@ -97,6 +96,15 @@ if($member==null){
     echo $jsonResult;
     return;
 }
+
+if($secret!=$member['password']){
+    $result = array('msg'=>'密钥错误!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+
+
 /**
  * 查询catid,areaid
  */
@@ -110,12 +118,6 @@ if($company==null){
 $sell['areaid']=$company['areaid'];
 $sell['catid']=$company['catid'];
 
-if($password!=$member['password']){
-    $result = array('msg'=>'密码错误!','code'=>2);
-    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
-    echo $jsonResult;
-    return;
-}
 
 
 $sell_fileds=array('catid','mycatid','areaid','typeid','level','title','tag','style','fee','introduce','n1','n2','n3','v1','v2','v3','brand','unit','price','minamount','amount','days','thumb','thumb1','thumb2','tag','status','hits','username','totime','editor','addtime','adddate','edittime','editdate','ip','template','linkurl','filepath','elite','note','company','truename','telephone','mobile','address','email','qq','wx','ali','skype');
