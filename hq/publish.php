@@ -12,10 +12,12 @@ $table_sell_search= DT_PRE.'sell_search_5';
 $table_member= DT_PRE.'member';
 $table_company= DT_PRE.'company';
 
-$userid=$sell['userid'];
+$userid=$_POST['userid'];
 $username=$_POST['username'];
 $secret=$_POST['secret'];
 $sell['company'] = $_POST['company'];
+$sell['username'] = $_POST['username'];
+$sell['userid'] = $_POST['userid'];
 $sell['introduce'] =$_POST['introduce'];
 $sell['title'] =$_POST['title'];
 $sell['n1'] =$_POST['n1'];
@@ -105,6 +107,7 @@ if($secret!=$member['password']){
 }
 
 
+
 /**
  * 查询catid,areaid
  */
@@ -117,6 +120,14 @@ if($company==null){
 }
 $sell['areaid']=$company['areaid'];
 $sell['catid']=$company['catid'];
+$sell['telephone']=$company['telephone'];
+$sell['company']=$company['company'];
+$sell['address']=$company['address'];
+$sell['mobile']=$member['mobile'];
+$sell['truename']=$member['truename'];
+$sell['email']=$member['email'];
+$sell['qq']=$member['qq'];
+
 
 
 
@@ -146,14 +157,14 @@ $keyword = $item['title'].','.'供应'.','.strip_tags(cat_pos(get_cat($item['cat
 
 $update = '';
 $update .= ",keyword='$keyword'";
-$linkurl = 'show.php?itemid='.$itemid;
+$linkurl = "https://www.yhwy.net/goods/". 'show.php?itemid='.$itemid;
 $update .= ",linkurl='$linkurl'";
 if($update) DB::query("UPDATE {$table_sell} SET ".(substr($update, 1))." WHERE itemid=$itemid");
 $sorttime = timetodate($item['edittime'], 'Y-m-d').' '.sprintf('%02d', $item['vip']).':'.timetodate($item['edittime'], 'H:i');
 $sorttime=strtotime($sorttime);
 DB::query("REPLACE INTO {$table_sell_search} (itemid,catid,areaid,status,content,sorttime) VALUES ($itemid,'$item[catid]','$item[areaid]','$item[status]','$keyword','$sorttime')");
 
-$result = array('msg'=>'发布成功!','code'=>1,'link'=>"https://www.yhwy.net/goods/".$linkurl,'itemid'=>$itemid);
+$result = array('msg'=>'发布成功!','code'=>1,'link'=>$linkurl,'itemid'=>$itemid);
 $jsonResult=json_encode($result,JSON_UNESCAPED_UNICODE);
 echo $jsonResult;
 

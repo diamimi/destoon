@@ -88,12 +88,27 @@ if ($member['email'] == '') {
     echo $jsonResult;
     return;
 }
+if ($member['mobile'] == '') {
+    $result = array('msg' => '手机号不能为空!', 'code' => 2);
+    $jsonResult = json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+if ($member['telephone'] == '') {
+    $result = array('msg' => '公司电话不能为空!', 'code' => 2);
+    $jsonResult = json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
 $username = $member['username'];
 $company = $member['company'];
 $email = $member['email'];
-$check = DB::count($table_member, " username='$username' or company='$company' or email='$email'");
-if ($check) {
-    $result = array('msg' => '公司名或用户名或邮箱已存在!', 'code' => 3);
+$mobile = $member['mobile'];
+$telephone = $member['telephone'];
+$check = DB::count($table_member, " username='$username' or company='$company' or email='$email' or mobile='$mobile'    ");
+$check2 = DB::count($table_company, "telephone='$telephone'");
+if ($check||$check2) {
+    $result = array('msg' => '公司名/用户名/邮箱/手机号/公司电话已存在!', 'code' => 2);
     $jsonResult = json_encode($result, JSON_UNESCAPED_UNICODE);
     echo $jsonResult;
     return;
