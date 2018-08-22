@@ -11,6 +11,8 @@ $table_sell_data= DT_PRE.'sell_data_5';
 $table_sell_search= DT_PRE.'sell_search_5';
 $table_member= DT_PRE.'member';
 $table_company= DT_PRE.'company';
+$table_area= DT_PRE.'area';
+$table_category= DT_PRE.'category';
 
 $userid=$_POST['userid'];
 $username=$_POST['username'];
@@ -41,9 +43,24 @@ $sell['editdate'] = $sell['adddate'];
 $sell['edittime'] = DT_TIME;
 $sell['addtime'] = DT_TIME;
 $sell['ip'] = DT_IP;
+$catid=$sell['catid'] =$_POST['catid'];
+$areaid=$sell['areaid'] =$_POST['areaid'];
 
 
+if($sell['catid']==''){
+    $result = array('msg'=>'行业id不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
 
+
+if($sell['areaid']==''){
+    $result = array('msg'=>'地区id不能为空!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
 
 if($sell['username']==''){
     $result = array('msg'=>'用户名不能为空!','code'=>2);
@@ -106,7 +123,20 @@ if($secret!=$member['password']){
     return;
 }
 
-
+$cat_exsit= DB::count($table_category, "catid='$catid'");
+if(!$cat_exsit){
+    $result = array('msg'=>'行业id不存在!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
+$area_exsit= DB::count($table_area, "areaid='$areaid'");
+if(!$area_exsit){
+    $result = array('msg'=>'行业id不存在!','code'=>2);
+    $jsonResult=json_encode($result, JSON_UNESCAPED_UNICODE);
+    echo $jsonResult;
+    return;
+}
 
 /**
  * 查询catid,areaid
@@ -118,8 +148,9 @@ if($company==null){
     echo $jsonResult;
     return;
 }
-$sell['areaid']=$company['areaid'];
-$sell['catid']=$company['catid'];
+
+
+
 $sell['telephone']=$company['telephone'];
 $sell['company']=$company['company'];
 $sell['address']=$company['address'];

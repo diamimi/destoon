@@ -20,9 +20,7 @@ if ($password == '') {
     return;
 }
 $member['passsalt'] = random(8);
-$member['paysalt'] = random(8);
 $member['password'] = dpassword($password, $member['passsalt']);
-$member['payword'] = dpassword($password, $member['paysalt']);
 $member['sound'] = 1;
 $member['username'] = $_POST['username'];
 $member['passport'] = $_POST['username'];
